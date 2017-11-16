@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Club\ClubCollection;
+use App\Http\Resources\Club\ClubResource;
 use App\Model\Club;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,8 @@ class ClubController extends Controller
      */
     public function index()
     {
-        //
+        // return Club::paginate(15);
+        return ClubCollection::collection(Club::paginate(15));
     }
 
     /**
@@ -46,7 +49,7 @@ class ClubController extends Controller
      */
     public function show(Club $club)
     {
-        //
+        return new ClubResource($club);
     }
 
     /**
