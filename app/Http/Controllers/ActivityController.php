@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Activity\ActivityResource;
 use App\Model\Activity;
+use App\Model\Club;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -12,9 +14,9 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Club $club)
     {
-        //
+        return ActivityResource::collection($club->activities);
     }
 
     /**
