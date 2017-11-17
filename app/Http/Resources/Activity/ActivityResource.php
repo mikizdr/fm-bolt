@@ -14,8 +14,9 @@ class ActivityResource extends Resource
      */
     public function toArray($request)
     {
-        return [parent::toArray($request)];
+        // return [parent::toArray($request)];
         return [
+            // 'ID' => $this->id,
             'activityName' => $this->name,
             'title' => $this->promo_title,
             'dayEvent' => $this->is_day_event,
@@ -26,6 +27,9 @@ class ActivityResource extends Resource
             'entryCriteria' => $this->entry_criteria,
             'maxRegistrations' => $this->max_registrations,
             'activityType' => $this->type_of_activity,
+            // 'detail' => [
+            //     'href' => route('activities.show', $this->id)
+            // ],
         ];
     }
 }

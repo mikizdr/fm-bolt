@@ -24,7 +24,7 @@ class ClubCollection extends Resource
             'email' => $this->email,
             'email' => $this->email,
             'phone' => $this->phone,
-            'link' => [
+            'clubDetails' => [
                 'href' => route('clubs.show', $this->id)
             ],
         ];
