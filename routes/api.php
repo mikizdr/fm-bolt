@@ -17,10 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('clubs', 'ClubController');
-
-Route::group(['prefix' => 'clubs'], function () {
-	Route::apiResource('{club}/activities', 'ActivityController');
+// Protect APIs with JWT
+Route::group(['middleware' => 'auth.jwt'], function () {
+	// /api/clubs endpoints
+	Route::apiResource('clubs', 'ClubController');
+	// /api/clubs/{club_id}/activities endpoints
+	Route::group(['prefix' => 'clubs'], function () {
+		Route::apiResource('{club}/activities', 'ActivityController');
+	});
 });
 
 // signup / signin users
