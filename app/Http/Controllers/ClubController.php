@@ -42,8 +42,14 @@ class ClubController extends Controller
     public function store(ClubRequest $request)
     {
         // return $request;
-        // extract the user from the token
-        $user = JWTAuth::parseToken()->toUser();
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json([
+                'message' => 'You are not authenticated to do this action.'
+            ], Response::HTTP_UNAUTHORIZED);
+        } else {
+            // extract the user from the token
+            $user = JWTAuth::parseToken()->toUser();
+        }        
 
         $club = new Club;
         $club->name = $request->name;
