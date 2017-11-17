@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClubRequest;
 use App\Http\Resources\Club\ClubCollection;
 use App\Http\Resources\Club\ClubResource;
 use App\Model\Club;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use JWTAuth;
 
 class ClubController extends Controller
 {
@@ -36,9 +39,38 @@ class ClubController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClubRequest $request)
     {
-        //
+        // return $request;
+        // extract the user from the token
+        $user = JWTAuth::parseToken()->toUser();
+
+        $club = new Club;
+        $club->name = $request->name;
+        $club->contract_name = $request->contract_name;
+        $club->description = $request->description;
+        $club->user_id = $request->user_id;
+        $club->creation_date = $request->creation_date;
+        $club->background_path = $request->background_path;
+        $club->icon_path = $request->icon_path;
+        $club->short_name = $request->short_name;
+        $club->address = $request->address;
+        $club->house_nr = $request->house_nr;
+        $club->zipcode = $request->zipcode;
+        $club->city = $request->city;
+        $club->invoice_address = $request->invoice_address;
+        $club->invoice_house_nr = $request->invoice_house_nr;
+        $club->invoice_zipcode = $request->invoice_zipcode;
+        $club->invoice_city = $request->invoice_city;
+        $club->email = $request->email;
+        $club->phone = $request->phone;
+
+        $club->save();
+
+        return response([
+            'data' => new ClubResource($club),
+            'user' => $user
+        ], Response::HTTP_CREATED);
     }
 
     /**
