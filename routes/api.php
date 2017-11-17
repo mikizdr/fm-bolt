@@ -22,3 +22,7 @@ Route::apiResource('clubs', 'ClubController');
 Route::group(['prefix' => 'clubs'], function () {
 	Route::apiResource('{club}/activities', 'ActivityController');
 });
+
+// signup / signin users
+Route::post('user/signup', 'UserController@signup');
+Route::post('user/signin', 'UserController@signin');
